@@ -2,15 +2,16 @@ package HTMXController
 
 import (
 	"errors"
+
+	"github.com/go-playground/validator/v10"
+	"github.com/gofiber/fiber/v2"
+	"gorm.io/gorm"
+
 	"realworld-fiber-htmx/cmd/web/model"
 	"realworld-fiber-htmx/internal"
 	"realworld-fiber-htmx/internal/authentication"
 	"realworld-fiber-htmx/internal/database"
 	"realworld-fiber-htmx/internal/helper"
-
-	"github.com/go-playground/validator/v10"
-	"github.com/gofiber/fiber/v2"
-	"gorm.io/gorm"
 )
 
 func ArticleDetailCommentList(c *fiber.Ctx) error {

@@ -2,10 +2,11 @@ package renderer
 
 import (
 	"errors"
-	"realworld-fiber-htmx/internal/authentication"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html/v2"
+
+	"realworld-fiber-htmx/internal/authentication"
 )
 
 func ViewEngineStart() *html.Engine {

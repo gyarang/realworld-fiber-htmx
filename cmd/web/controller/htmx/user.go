@@ -2,13 +2,14 @@ package HTMXController
 
 import (
 	"errors"
+
+	"github.com/gofiber/fiber/v2"
+	"gorm.io/gorm"
+
 	"realworld-fiber-htmx/cmd/web/model"
 	"realworld-fiber-htmx/internal/authentication"
 	"realworld-fiber-htmx/internal/database"
 	"realworld-fiber-htmx/internal/helper"
-
-	"github.com/gofiber/fiber/v2"
-	"gorm.io/gorm"
 )
 
 func UserDetailPage(c *fiber.Ctx) error {
@@ -150,7 +151,7 @@ func UserArticlesFavorite(c *fiber.Ctx) error {
 		Preload("User").
 		Order("created_at desc").
 		Association("Favorites").
-		Find(&articles)
+		Find(&articles) //nolint:errcheck
 
 	if len(articles) > 0 {
 		hasArticles = true

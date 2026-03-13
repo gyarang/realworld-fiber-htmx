@@ -1,0 +1,23 @@
+# Lefthook
+lefthook-local.yml
+
+# Build artifacts
+bin/
+tmp/
+coverage.out
+coverage.html
+
+# SQLite
+*.sqlite-journal
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OMC state
+.omc/
+
+# OS
+.DS_Store

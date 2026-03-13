@@ -2,13 +2,14 @@ package HTMXController
 
 import (
 	"errors"
+
+	"github.com/gofiber/fiber/v2"
+	"gorm.io/gorm"
+
 	"realworld-fiber-htmx/cmd/web/model"
 	"realworld-fiber-htmx/internal/authentication"
 	"realworld-fiber-htmx/internal/database"
 	"realworld-fiber-htmx/internal/helper"
-
-	"github.com/gofiber/fiber/v2"
-	"gorm.io/gorm"
 )
 
 func ArticleFavoriteAction(c *fiber.Ctx) error {
@@ -40,9 +41,9 @@ func ArticleFavoriteAction(c *fiber.Ctx) error {
 	authenticatedUser.ID = userID
 
 	if article.FavoritedBy(userID) {
-		db.Model(&article).Association("Favorites").Delete(&authenticatedUser)
+		_ = db.Model(&article).Association("Favorites").Delete(&authenticatedUser)
 	} else {
-		db.Model(&article).Association("Favorites").Append(&authenticatedUser)
+		_ = db.Model(&article).Association("Favorites").Append(&authenticatedUser)
 		isArticleFavorited = true
 	}
 
@@ -89,11 +90,11 @@ func ArticleFollowAction(c *fiber.Ctx) error {
 			FollowingID: userID,
 		}
 
-		db.Model(&article.User).Association("Followers").Find(&f)
+		_ = db.Model(&article.User).Association("Followers").Find(&f)
 		db.Delete(&f)
 
 	} else {
-		db.Model(&article.User).Association("Followers").Append(&model.Follow{FollowerID: article.UserID, FollowingID: userID})
+		_ = db.Model(&article.User).Association("Followers").Append(&model.Follow{FollowerID: article.UserID, FollowingID: userID})
 		isFollowed = true
 	}
 

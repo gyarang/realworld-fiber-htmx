@@ -1,0 +1,19 @@
+pre-commit:
+  parallel: true
+  commands:
+    fmt-check:
+      glob: "*.go"
+      run: gofmt -l {staged_files} | grep -v '^$' && echo "gofmt failed" && exit 1 || true
+    go-vet:
+      glob: "*.go"
+      run: go vet ./...
+    lint:
+      glob: "*.go"
+      run: golangci-lint run
+
+pre-push:
+  commands:
+    build:
+      run: go build ./...
+    test:
+      run: go test ./...

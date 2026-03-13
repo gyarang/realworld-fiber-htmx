@@ -1,0 +1,22 @@
+schema: spec-driven
+
+context: |
+  Tech stack: Go 1.21, Fiber v2, HTMX, GORM + SQLite, Bootstrap CSS
+  Architecture: Dual controller pattern (page controllers + HTMX controllers)
+  Session-based authentication with Fiber session middleware
+  Template engine: Go HTML templates with custom functions
+  Project: RealWorld (Conduit) blogging application
+  Language policy: English for technical terms, Korean for descriptions
+
+rules:
+  proposal:
+    - 제안서는 500자 이내로 작성
+    - 반드시 "Non-goals" 섹션 포함
+    - 영향받는 컨트롤러 레이어 (page/HTMX/both) 명시
+  design:
+    - 듀얼 컨트롤러 패턴 준수 여부 확인
+    - GORM 관계 변경 시 마이그레이션 영향 분석
+    - 템플릿 변경 시 레이아웃 호환성 확인
+  tasks:
+    - 태스크는 최대 2시간 단위로 분할
+    - 각 태스크에 테스트 작성 포함

@@ -1,0 +1,32 @@
+version: "2"
+
+run:
+  timeout: 3m
+  go: "1.21"
+
+linters:
+  enable:
+    - errcheck
+    - govet
+    - ineffassign
+    - staticcheck
+    - unused
+
+  settings:
+    errcheck:
+      check-blank: false
+
+formatters:
+  enable:
+    - gofmt
+    - goimports
+
+  settings:
+    goimports:
+      local-prefixes: realworld-fiber-htmx
+
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - errcheck

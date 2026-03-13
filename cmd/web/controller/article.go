@@ -2,12 +2,13 @@ package controller
 
 import (
 	"errors"
-	"realworld-fiber-htmx/cmd/web/model"
-	"realworld-fiber-htmx/internal/authentication"
-	"realworld-fiber-htmx/internal/database"
 
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/gorm"
+
+	"realworld-fiber-htmx/cmd/web/model"
+	"realworld-fiber-htmx/internal/authentication"
+	"realworld-fiber-htmx/internal/database"
 )
 
 func ArticleDetailPage(c *fiber.Ctx) error {

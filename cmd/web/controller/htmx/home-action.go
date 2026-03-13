@@ -2,13 +2,14 @@ package HTMXController
 
 import (
 	"errors"
+
+	"github.com/gofiber/fiber/v2"
+	"gorm.io/gorm"
+
 	"realworld-fiber-htmx/cmd/web/model"
 	"realworld-fiber-htmx/internal/authentication"
 	"realworld-fiber-htmx/internal/database"
 	"realworld-fiber-htmx/internal/helper"
-
-	"github.com/gofiber/fiber/v2"
-	"gorm.io/gorm"
 )
 
 func HomeFavoriteAction(c *fiber.Ctx) error {
@@ -39,9 +40,9 @@ func HomeFavoriteAction(c *fiber.Ctx) error {
 	authenticatedUser.ID = userID
 
 	if article.FavoritedBy(userID) {
-		db.Model(&article).Association("Favorites").Delete(&authenticatedUser)
+		_ = db.Model(&article).Association("Favorites").Delete(&authenticatedUser)
 	} else {
-		db.Model(&article).Association("Favorites").Append(&authenticatedUser)
+		_ = db.Model(&article).Association("Favorites").Append(&authenticatedUser)
 		isArticleFavorited = true
 	}
 

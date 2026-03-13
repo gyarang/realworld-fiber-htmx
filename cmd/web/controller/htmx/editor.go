@@ -3,16 +3,17 @@ package HTMXController
 import (
 	"encoding/json"
 	"errors"
-	"realworld-fiber-htmx/cmd/web/model"
-	"realworld-fiber-htmx/internal"
-	"realworld-fiber-htmx/internal/authentication"
-	"realworld-fiber-htmx/internal/database"
-	"realworld-fiber-htmx/internal/helper"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gosimple/slug"
 	"gorm.io/gorm"
+
+	"realworld-fiber-htmx/cmd/web/model"
+	"realworld-fiber-htmx/internal"
+	"realworld-fiber-htmx/internal/authentication"
+	"realworld-fiber-htmx/internal/database"
+	"realworld-fiber-htmx/internal/helper"
 )
 
 func EditorPage(c *fiber.Ctx) error {
@@ -108,7 +109,7 @@ func StoreArticle(c *fiber.Ctx) error {
 	db.Create(article)
 
 	if c.FormValue("tags") != "" {
-		json.Unmarshal([]byte(c.FormValue("tags")), &tagItems)
+		_ = json.Unmarshal([]byte(c.FormValue("tags")), &tagItems)
 
 		for i := 0; i < len(tagItems); i++ {
 			tagItem := tagItems[i]
@@ -195,7 +196,7 @@ func UpdateArticle(c *fiber.Ctx) error {
 	db.Updates(article)
 
 	if c.FormValue("tags") != "" {
-		json.Unmarshal([]byte(c.FormValue("tags")), &tagItems)
+		_ = json.Unmarshal([]byte(c.FormValue("tags")), &tagItems)
 
 		for i := 0; i < len(tagItems); i++ {
 			tagItem := tagItems[i]

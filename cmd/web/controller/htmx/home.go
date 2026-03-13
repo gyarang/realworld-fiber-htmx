@@ -2,12 +2,13 @@ package HTMXController
 
 import (
 	"math"
-	"realworld-fiber-htmx/cmd/web/model"
-	"realworld-fiber-htmx/internal/authentication"
-	"realworld-fiber-htmx/internal/database"
 
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/gorm"
+
+	"realworld-fiber-htmx/cmd/web/model"
+	"realworld-fiber-htmx/internal/authentication"
+	"realworld-fiber-htmx/internal/database"
 )
 
 func HomePage(c *fiber.Ctx) error {
@@ -55,7 +56,7 @@ func HomeYourFeed(c *fiber.Ctx) error {
 	db := database.Get()
 	db.Model(&user).Where("id = ?", userID).First(&user)
 
-	db.Model(&user).Preload("Followings").Association("Followings").Find(&followings)
+	_ = db.Model(&user).Preload("Followings").Association("Followings").Find(&followings)
 	if len(followings) == 0 {
 		hasArticles = false
 	}
@@ -103,7 +104,7 @@ func HomeYourFeed(c *fiber.Ctx) error {
 		hasArticles = true
 	}
 
-	c.Render("home/htmx-home-feed", fiber.Map{
+	return c.Render("home/htmx-home-feed", fiber.Map{
 		"HasArticles":        hasArticles,
 		"Articles":           articles,
 		"FeedNavbarItems":    feedNavbarItems,
@@ -114,8 +115,6 @@ func HomeYourFeed(c *fiber.Ctx) error {
 		"PushPathPagination": "your-feed",
 		"PathPagination":     "your-feed",
 	}, "layouts/app-htmx")
-
-	return nil
 }
 
 func HomeGlobalFeed(c *fiber.Ctx) error {
@@ -184,7 +183,7 @@ func HomeGlobalFeed(c *fiber.Ctx) error {
 		}
 	}
 
-	c.Render("home/htmx-home-feed", fiber.Map{
+	return c.Render("home/htmx-home-feed", fiber.Map{
 		"HasArticles":         hasArticles,
 		"Articles":            articles,
 		"FeedNavbarItems":     feedNavbarItems,
@@ -194,8 +193,6 @@ func HomeGlobalFeed(c *fiber.Ctx) error {
 		"CurrentPagination":   page + 1,
 		"PathPagination":      "global-feed",
 	}, "layouts/app-htmx")
-
-	return nil
 }
 
 func HomeTagFeed(c *fiber.Ctx) error {
@@ -232,7 +229,7 @@ func HomeTagFeed(c *fiber.Ctx) error {
 		Offset(page * 5).
 		Order("created_at desc").
 		Association("Articles").
-		Find(&articles)
+		Find(&articles) //nolint:errcheck
 
 	count = db.Model(&tag).
 		Association("Articles").
@@ -278,7 +275,7 @@ func HomeTagFeed(c *fiber.Ctx) error {
 		},
 	)
 
-	c.Render("home/htmx-home-feed", fiber.Map{
+	return c.Render("home/htmx-home-feed", fiber.Map{
 		"HasArticles":        hasArticles,
 		"Articles":           articles,
 		"FeedNavbarItems":    feedNavbarItems,
@@ -288,8 +285,6 @@ func HomeTagFeed(c *fiber.Ctx) error {
 		"PushPathPagination": "tag-feed/" + tag.Name,
 		"PathPagination":     "tag-feed/" + tag.Name,
 	}, "layouts/app-htmx")
-
-	return nil
 }
 
 func HomeTagList(c *fiber.Ctx) error {
@@ -313,10 +308,8 @@ func HomeTagList(c *fiber.Ctx) error {
 		hasTags = true
 	}
 
-	c.Render("home/partials/tag-item-list", fiber.Map{
+	return c.Render("home/partials/tag-item-list", fiber.Map{
 		"Tags":    tags,
 		"HasTags": hasTags,
 	}, "layouts/app-htmx")
-
-	return nil
 }
