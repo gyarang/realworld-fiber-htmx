@@ -16,6 +16,12 @@ linters:
     errcheck:
       check-blank: false
 
+  exclusions:
+    rules:
+      - path: _test\.go
+        linters:
+          - errcheck
+
 formatters:
   enable:
     - gofmt
@@ -23,10 +29,5 @@ formatters:
 
   settings:
     goimports:
-      local-prefixes: realworld-fiber-htmx
-
-issues:
-  exclude-rules:
-    - path: _test\.go
-      linters:
-        - errcheck
+      local-prefixes:
+        - realworld-fiber-htmx
