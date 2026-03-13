@@ -128,8 +128,15 @@ Routes are split accordingly:
 
 ## Custom Skills
 
-- `fiber-htmx-controller` — 듀얼 컨트롤러(page+HTMX) 생성 패턴
-- `fiber-htmx-template` — 템플릿 생성 패턴 (레이아웃, HTMX 속성, partial 분리)
+| 스킬 | 명령어 | 용도 |
+|------|--------|------|
+| `fiber-htmx-controller` | `/fiber-htmx-controller` | 듀얼 컨트롤러(page+HTMX) 생성 패턴 |
+| `fiber-htmx-template` | `/fiber-htmx-template` | 템플릿 생성 패턴 (레이아웃, HTMX 속성, partial 분리) |
+| `add-feature` | `/add-feature [name]` | 풀스택 스캐폴딩 (컨트롤러 쌍 + 템플릿 + 라우트 + 테스트 스텁) |
+| `add-model` | `/add-model [name]` | GORM 모델 + 관계 설정 + 단위 테스트 생성 |
+| `gen-integration-test` | `/gen-integration-test [path]` | 통합 테스트 자동 생성 (SetupTestApp 패턴) |
+| `gen-e2e-test` | `/gen-e2e-test [feature]` | Playwright E2E 테스트 생성 (HTMX 셀렉터 맵 내장) |
+| `debug-htmx` | `/debug-htmx [증상]` | HTMX 문제 진단 (라우트→컨트롤러→템플릿 체인 검증) |
 
 ## Git Hooks (lefthook)
 
