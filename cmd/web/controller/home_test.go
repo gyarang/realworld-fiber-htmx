@@ -50,3 +50,50 @@ func TestYourFeedPage_Unauthenticated_Redirects(t *testing.T) {
 
 	assert.Equal(t, http.StatusFound, resp.StatusCode)
 }
+
+func TestYourFeedPage_Authenticated(t *testing.T) {
+	app, db := testutil.SetupTestApp(t)
+
+	user := testutil.CreateTestUser(t, db, "User", "feeduser", "feed@example.com", "password123")
+	cookie := testutil.AuthenticateUser(t, app, user)
+
+	req := httptest.NewRequest(http.MethodGet, "/your-feed", nil)
+	if cookie != "" {
+		req.Header.Set("Cookie", cookie)
+	}
+
+	resp, err := app.Test(req, -1)
+	require.NoError(t, err)
+	defer func() { _ = resp.Body.Close() }()
+
+	assert.Equal(t, http.StatusOK, resp.StatusCode)
+}
+
+func TestTagFeedPage_Unauthenticated(t *testing.T) {
+	app, _ := testutil.SetupTestApp(t)
+
+	req := httptest.NewRequest(http.MethodGet, "/tag-feed/golang", nil)
+	resp, err := app.Test(req, -1)
+	require.NoError(t, err)
+	defer func() { _ = resp.Body.Close() }()
+
+	assert.Equal(t, http.StatusOK, resp.StatusCode)
+}
+
+func TestTagFeedPage_Authenticated(t *testing.T) {
+	app, db := testutil.SetupTestApp(t)
+
+	user := testutil.CreateTestUser(t, db, "User", "taguser", "tag@example.com", "password123")
+	cookie := testutil.AuthenticateUser(t, app, user)
+
+	req := httptest.NewRequest(http.MethodGet, "/tag-feed/golang", nil)
+	if cookie != "" {
+		req.Header.Set("Cookie", cookie)
+	}
+
+	resp, err := app.Test(req, -1)
+	require.NoError(t, err)
+	defer func() { _ = resp.Body.Close() }()
+
+	assert.Equal(t, http.StatusOK, resp.StatusCode)
+}
