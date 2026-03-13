@@ -53,7 +53,7 @@ jobs:
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v6
         with:
-          version: latest
+          version: v2.0.2
 
   e2e:
     runs-on: ubuntu-latest
@@ -76,12 +76,6 @@ jobs:
       - name: Install Playwright browsers
         working-directory: e2e
         run: npx playwright install --with-deps chromium
-
-      - name: Build and start server
-        run: |
-          go build -o ./tmp/conduit main.go
-          ./tmp/conduit &
-          sleep 3
 
       - name: Run E2E tests
         working-directory: e2e
